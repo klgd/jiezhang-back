@@ -20,6 +20,11 @@ class Api::ApiController < ApplicationController
       return
     end
     
+    app_id = request.headers['X-WX-APP-ID']
+    if app_id.blank? || app_id != Settings.wechat.appid
+      return render json: { status: 404, msg: 'invalid appid' }
+    end
+
     third_key = request.headers['X-WX-Skey']
     @current_user = User.find_by_third_session(third_key)
     if @current_user.blank? || Rails.cache.read(@current_user.redis_session_key).blank?
