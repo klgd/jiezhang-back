@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180824121236) do
+ActiveRecord::Schema.define(version: 20180913143658) do
 
   create_table "asset_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
@@ -112,6 +112,18 @@ ActiveRecord::Schema.define(version: 20180824121236) do
     t.string "page_url"
   end
 
+  create_table "operate_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.integer "year"
+    t.integer "month"
+    t.integer "day"
+    t.string "page_route", limit: 512
+    t.string "session_key"
+    t.string "ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pre_orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "owner_id"
     t.integer "creator_id"
@@ -144,7 +156,7 @@ ActiveRecord::Schema.define(version: 20180824121236) do
     t.string "city"
     t.string "district"
     t.string "street"
-    t.integer "target_asset_id"
+    t.integer "target_asset"
     t.string "title"
     t.index ["type"], name: "index_statements_on_type"
     t.index ["user_id", "asset_id"], name: "index_statements_on_user_id_and_asset_id"

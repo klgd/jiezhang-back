@@ -11,7 +11,9 @@ class Api::ApiController < ApplicationController
   attr_accessor :current_user
   
   before_action :login
-  
+
+  after_action :add_operate_log
+
   include ApplicationHelper
 
   def login
@@ -31,6 +33,18 @@ class Api::ApiController < ApplicationController
       # 判断该键是否过期，过期返回状态码，要求登录后方可继续
       return render json: { status: 301, msg: 'user not found' }
     end
+  end
+
+  def add_operate_log
+    now = Time.now
+    current_user.operate_logs.create(
+      year: now.year,
+      month: now.month,
+      day: now.day,
+      session_key: current_user.session_key,
+      page_route: request.headers['X-WX-PAGES'],
+      ip: request.headers['HTTP_X_REAL_IP']
+    )
   end
 
   def render_404(msg = '找不到对应记录')

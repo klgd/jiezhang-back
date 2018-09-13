@@ -43,16 +43,16 @@ class Api::LoginController < ApplicationController
   def wx_get_session_key(code)
     uri = URI('https://api.weixin.qq.com/sns/jscode2session')
     params = { 
-                appid: Settings.wechat.appid,
-                secret: Settings.wechat.app_secret, 
-                js_code: code, 
-                grant_type: 'authorization_code' 
-              }
+			appid: Settings.wechat.appid,
+			secret: Settings.wechat.app_secret, 
+			js_code: code, 
+			grant_type: 'authorization_code' 
+		}
     uri.query = URI.encode_www_form(params)
     resp = Net::HTTP.get_response(uri)
     if resp.is_a?(Net::HTTPSuccess) && !resp.body['errcode']
-      return resp.body
-    else
+      resp.body
+		else
       raise("wx get session Fail #{resp.body}")
     end
   end

@@ -69,13 +69,13 @@ class Api::StatementsController < Api::ApiController
 		end
 
 		def guess(obj, is_category = false)
-			obj = obj.where("parent_id > 0 and frequent >= 3")
-			obj = obj.joins(:statements)
-							 .where("time(`statements`.created_at) <= :start_time and time(`statements`.created_at) >= :end_time",
-												start_time: (Time.now + 1.hour).strftime('%H:%M:%S'),
-												end_time: (Time.now - 1.hour).strftime('%H:%M:%S'),
-											)
+			now = Time.now
 			obj = obj.where("`statements`.type = ?", params[:type] || 'expend') if is_category
+			obj = obj.joins(:statements)
+							 .where("parent_id > 0 and frequent >= 5")
+							 .where("time(`statements`.created_at) <= ? and time(`statements`.created_at) >= ?", 
+							 				(now + 30.minutes).strftime('%H:%M:%S'), (now - 30.minutes).strftime('%H:%M:%S'))
+							 .group("#{is_category ? 'categories' : 'assets'}.id")
 			obj.order('frequent desc').limit(3).uniq
 		end
 end
