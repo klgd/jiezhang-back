@@ -1,4 +1,4 @@
-# 洁账后端
+# 洁账服务端
 > Rails 提供的洁账小程序后端Api代码
 
 ### 洁账小程序代码
@@ -13,16 +13,21 @@ Rails 5.1.3
 
 ### 安装
 ```
+// 环境配置
 cp config/environments/development.rb.example config/environments/development.rb
 
+// 自定义配置
 cp config/settings/development.yml.exmaple config/settings/development.yml
 
 cp config/secrets.yml.example config/secrets.yml
 
+// 创建数据库
 bundle exec rake db:create RAILS_ENV=development
 
+// 迁移数据表
 bundle exec rake db:migrate RAILS_ENV=development
 
+// 安装依赖
 bundle install
 ```
 
@@ -32,7 +37,7 @@ bundle install
 bundle exec unicorn_rails -l 0.0.0.0:3000 -D -E development -c config/unicorn.rb
 
 // 生产环境下启动项目
-bundle exec unicorn_rails -l 0.0.0.0:3000 -D -E development -c config/unicorn.rb 
+bundle exec unicorn_rails -l 0.0.0.0:3000 -D -E production -c config/unicorn.rb 
 ```
 
 ### Docker运行
