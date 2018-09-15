@@ -37,5 +37,4 @@ module JieZhang
       new(Rails.root.join("log/application.log"))
     end
   end
-  
 end
