@@ -6,19 +6,12 @@ class Api::StatementsController < Api::ApiController
 	def create
 		service = StatementsService.new(current_user, params)
 		@statement = service.create!
-		unless @statement.is_a?(Statement)
-			return render_success
-		end
 	end
 
 	def update
 		service = StatementsService.new(current_user, params)
 		@statement = service.update!
-		if @statement.is_a?(Statement)
-			render 'create'
-		else
-			render_success
-		end
+		render 'create'
 	end
 
 	def destroy
@@ -38,14 +31,14 @@ class Api::StatementsController < Api::ApiController
 	# 账户选择
 	def assets
 		@list = current_user.assets.includes(:children).where(parent_id: 0)
-		@frequents = @list.where("parent_id > 0 and frequent != 0").order('frequent desc').limit(5)
+		@frequents = current_user.assets.where("parent_id > 0 and frequent > 5").order('frequent desc').limit(10)
 		render 'list'
   end
 
 	# 分类选择
 	def categories
 		@list = current_user.categories.includes(:children).where(parent_id: 0, type: params[:type] || 'expend')
-		@frequents = @list.where("parent_id > 0 and frequent != 0").order('frequent desc').limit(5)
+		@frequents = current_user.categories.where("parent_id > 0 and frequent > 5").order('frequent desc').limit(10)
 		render 'list'
 	end
 
