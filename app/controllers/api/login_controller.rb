@@ -3,17 +3,13 @@ class Api::LoginController < ApplicationController
 	# 获取 openid 存储并返回 key
 	def check_openid
 		code = request.headers['X-WX-Code']
-		begin
-			session = wx_get_session_key(code)
-			session = JSON.parse(session)
-		rescue => e
-			session = nil
-		end
-
+		start_time = Time.now
+		session = wx_get_session_key(code)
 		if session.blank? || session['session_key'].blank? || session['openid'].blank?
 			return render json: { status: 401, msg: '登录失败' }
 		end
 
+		session = JSON.parse(session)
 		openid = session['openid']
 		session_key = session['session_key']
 		user = User.find_by_openid(openid) || User.new(openid: openid, session_key: session_key)
@@ -27,6 +23,8 @@ class Api::LoginController < ApplicationController
 			user.third_session = third_session
 			user.save!
 			Rails.cache.write(user.redis_session_key, third_session, expires_in: 3.hour)
+			# 记录请求时间
+			L("action: get_openid, id: #{user.id}, used time: #{Time.now - start_time}")
 			return render json: { session: third_session }
 		end
 
@@ -46,9 +44,7 @@ class Api::LoginController < ApplicationController
     uri.query = URI.encode_www_form(params)
     resp = Net::HTTP.get_response(uri)
     if resp.is_a?(Net::HTTPSuccess) && !resp.body['errcode']
-      resp.body
-		else
-      raise("wx get session Fail #{resp.body}")
+      return resp.body
     end
   end
 

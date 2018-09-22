@@ -1,8 +1,10 @@
 class Api::IndexController < Api::ApiController
   def index
+    start_time = Time.now
     begin_week = Time.now.beginning_of_week.beginning_of_day
     end_week = Time.now.end_of_week.end_of_day
     @statements = current_user.statements.includes(:category, :asset).where("created_at >= ? AND created_at <= ?", begin_week, end_week).order('created_at desc')
+    L("action: index_controller, id: #{current_user.id}, used time: #{Time.now - start_time}")
   end
 
   def header

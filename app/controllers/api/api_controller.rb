@@ -3,7 +3,7 @@ class Api::ApiController < ApplicationController
   protect_from_forgery with: :null_session
 
   # disable cookies (no set-cookies header in response)
-  before_action :destroy_session
+  before_action :skip_session
 
   # disable the CSRF token
   skip_before_action :verify_authenticity_token
@@ -17,11 +17,6 @@ class Api::ApiController < ApplicationController
   include ApplicationHelper
 
   def login
-    if ENV['RAILS_ENV'] == 'development'
-      @current_user ||= User.first
-      return
-    end
-    
     app_id = request.headers['X-WX-APP-ID']
     if app_id.blank? || app_id != Settings.wechat.appid
       return render json: { status: 404, msg: 'invalid appid' }
@@ -31,8 +26,9 @@ class Api::ApiController < ApplicationController
     @current_user = User.find_by_third_session(third_key)
     if @current_user.blank? || Rails.cache.read(@current_user.redis_session_key).blank?
       # 判断该键是否过期，过期返回状态码，要求登录后方可继续
-      return render json: { status: 301, msg: 'user not found' }
+      return render json: { status: 301, msg: 'session key overdue' }
     end
+    L("action: before_action, id: #{current_user.id}, time: #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}")
   end
 
   def add_operate_log
@@ -45,6 +41,7 @@ class Api::ApiController < ApplicationController
       page_route: request.headers['X-WX-PAGES'],
       ip: request.headers['HTTP_X_REAL_IP']
     )
+    L("action: after_action, id: #{current_user.id}, time: #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}")
   end
 
   def render_404(msg = '找不到对应记录')
@@ -62,7 +59,7 @@ class Api::ApiController < ApplicationController
     render json: { status: opts[:status], msg: opts[:msg] }
   end
 
-  def destroy_session
+  def skip_session
     request.session_options[:skip] = true
   end
 end
