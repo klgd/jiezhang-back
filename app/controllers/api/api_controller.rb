@@ -17,6 +17,11 @@ class Api::ApiController < ApplicationController
   include ApplicationHelper
 
   def login
+    if ENV['RAILS_ENV'] == 'development'
+      @current_user ||= User.first
+      return
+    end
+
     app_id = request.headers['X-WX-APP-ID']
     if app_id.blank? || app_id != Settings.wechat.appid
       return render json: { status: 404, msg: 'invalid appid' }

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
     get 'icons/assets' => 'icon#assets'
     get 'icons/categories' => 'icon#categories'
-
+    
     resources :budgets do
       collection do
         get :parent
@@ -88,6 +88,7 @@ Rails.application.routes.draw do
     resources :super_chart, only: [:index] do
       collection do
         get :line_chart
+        get :month_chart
       end
     end
 

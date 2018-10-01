@@ -6,8 +6,8 @@ class Category < ApplicationRecord
   belongs_to :parent, foreign_key: 'parent_id', class_name: 'Category', optional: true
   has_many :children, foreign_key: 'parent_id', class_name: 'Category'
   
-  scope :expend_childs, ->{ where("parent_id != 0 and type = 'expend'") }
-  scope :income_childs, ->{ where("parent_id != 0 and type = 'income'") }
+  scope :expend_childs, ->{ where("parent_id > 0 and type = 'expend'") }
+  scope :income_childs, ->{ where("parent_id > 0 and type = 'income'") }
   scope :parent_list, ->{ where("parent_id = 0") }
   
   before_validation :check_params

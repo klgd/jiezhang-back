@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180913143658) do
+ActiveRecord::Schema.define(version: 20181001134318) do
 
   create_table "asset_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
@@ -110,6 +110,26 @@ ActiveRecord::Schema.define(version: 20180913143658) do
     t.datetime "updated_at", null: false
     t.integer "already_read", default: 0
     t.string "page_url"
+    t.text "sub_title"
+  end
+
+  create_table "month_charts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.integer "year"
+    t.integer "month"
+    t.json "dashboard"
+    t.json "expend_compare"
+    t.json "day_avg"
+    t.json "week_avg"
+    t.json "month_surplus"
+    t.json "budget_used"
+    t.json "asset_total"
+    t.json "month_last_10"
+    t.text "begin_text"
+    t.text "end_text"
+    t.text "cover"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "operate_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -156,7 +176,7 @@ ActiveRecord::Schema.define(version: 20180913143658) do
     t.string "city"
     t.string "district"
     t.string "street"
-    t.integer "target_asset"
+    t.integer "target_asset_id"
     t.string "title"
     t.index ["type"], name: "index_statements_on_type"
     t.index ["user_id", "asset_id"], name: "index_statements_on_user_id_and_asset_id"
