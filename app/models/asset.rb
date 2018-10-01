@@ -8,8 +8,8 @@ class Asset < ApplicationRecord
 
   before_validation :check_params
 
-  scope :deposit, ->{ where("type = 'deposit' AND parent_id != 0") }
-  scope :debt, ->{ where("type = 'debt' AND parent_id != 0") }
+  scope :deposit, ->{ where("type = 'deposit' AND parent_id > 0") }
+  scope :debt, ->{ where("type = 'debt' AND parent_id > 0") }
   scope :parent_list, ->{ where("parent_id = 0") }
 
   DEPOSIT = 'deposit'

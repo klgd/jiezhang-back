@@ -1,17 +1,21 @@
 task :add_message => :environment do
-  content = File.read(File.join('log/test.md'))
-  title = '8月账单'
+  year = 2018
+  month = 9
+  title = '九月账单'
   count = User.count
+  content = ''
   User.all.each_with_index do |user, index|
     puts "#{index}/#{count}"
-    user.messages.create(
+    message = user.messages.create(
       title: title,
       target_id: user.id,
       target_type: 0,
       content: content,
       content_type: 'md',
-      page_url: '/pages/message/message_detail'
+      avatar_url: "/9cover.jpg",
+      sub_title: 'Hello，国庆快乐'
     )
+    message.update_column(:page_url, "/pages/months/index?year=#{year}&month=#{month}&id=#{message.id}")
   end
   puts 'end'
 end

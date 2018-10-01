@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :feedbacks
   has_many :messages, foreign_key: :target_id
   has_many :operate_logs
-
+  has_many :month_charts
   validates :openid, presence: true, uniqueness: true
 
   mount_uploader :avatar_url, AvatarUploader

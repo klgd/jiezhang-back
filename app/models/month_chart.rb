@@ -1,0 +1,4 @@
+class MonthChart < ApplicationRecord
+  
+  
+end

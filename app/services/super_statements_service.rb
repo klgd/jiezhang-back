@@ -50,25 +50,26 @@ class SuperStatementsService
   end
   
   private
-    def filter_statements
-      @statements = current_user.statements
-      if params[:year].present?
-        @statements = @statements.where(year: params[:year])
-      end
-      if params[:month].present? && params[:month].to_i != -1
-        @statements = @statements.where(month: params[:month])
-      end
-      if params[:asset].present?
-        asset_ids = current_user.assets.where('parent_id = ?', params[:asset]).pluck(:id)
-        @statements = @statements.where(asset_id: asset_ids)
-      end
-      if params[:asset_id].present?
-        @statements = @statements.where(asset_id: params[:asset_id])
-      end
-      if params[:category_id].present?
-        @statements = @statements.where(category_id: params[:category_id])
-      end
-      @statements
+
+  def filter_statements
+    @statements = current_user.statements
+    if params[:year].present?
+      @statements = @statements.where(year: params[:year])
     end
+    if params[:month].present? && params[:month].to_i != -1
+      @statements = @statements.where(month: params[:month])
+    end
+    if params[:asset].present?
+      asset_ids = current_user.assets.where('parent_id = ?', params[:asset]).pluck(:id)
+      @statements = @statements.where(asset_id: asset_ids)
+    end
+    if params[:asset_id].present?
+      @statements = @statements.where(asset_id: params[:asset_id])
+    end
+    if params[:category_id].present?
+      @statements = @statements.where(category_id: params[:category_id])
+    end
+    @statements
+  end
 
 end

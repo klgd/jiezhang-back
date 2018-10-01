@@ -52,22 +52,30 @@ class Api::SuperChartController < Api::ApiController
     render json: {months: @months, expends: @expends, incomes: @incomes, surplus: @surplus}
   end
 
+  # 月报表
+  def month_chart
+    service = SuperChartService.new(current_user, params)
+    data = service.execute
+    render json: data
+  end
+
   private
-    def get_statements
-      type = params[:type] || 'month'
-      month = params[:month]  || Time.now.month
-      year = params[:year] || Time.now.year  
-      if type == 'month'
-        local_time = Time.parse("#{year}-#{month}-01")
-        last_month = local_time.last_month
-        @statements = current_user.statements.where(year: year, month: month)
-        @prev_statements = current_user.statements.where(year: last_month.year, month: last_month.month)
-      elsif type == 'year'
-        @statements = current_user.statements.where(year: year)
-        @prev_statements = current_user.statements.where(year: year.to_i - 1)
-      elsif type == 'all'
-        @statements = current_user.statements
-        @prev_statements = current_user.statements
-      end
+
+  def get_statements
+    type = params[:type] || 'month'
+    month = params[:month]  || Time.now.month
+    year = params[:year] || Time.now.year  
+    if type == 'month'
+      local_time = Time.parse("#{year}-#{month}-01")
+      last_month = local_time.last_month
+      @statements = current_user.statements.where(year: year, month: month)
+      @prev_statements = current_user.statements.where(year: last_month.year, month: last_month.month)
+    elsif type == 'year'
+      @statements = current_user.statements.where(year: year)
+      @prev_statements = current_user.statements.where(year: year.to_i - 1)
+    elsif type == 'all'
+      @statements = current_user.statements
+      @prev_statements = current_user.statements
     end
+  end
 end
