@@ -42,7 +42,7 @@ class Api::ApiController < ApplicationController
       year: now.year,
       month: now.month,
       day: now.day,
-      session_key: current_user.session_key,
+      session_key: request.headers['X-WX-Skey'],
       page_route: request.headers['X-WX-PAGES'],
       ip: request.headers['HTTP_X_REAL_IP']
     )
