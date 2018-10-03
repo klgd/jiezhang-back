@@ -10,6 +10,7 @@ task :month_total => :environment do
   count = User.count
   index = 1
   User.find_each do |user|
+    next if user.statements.where(year: @year, month: @month).blank?
     next if MonthChart.where(user_id: user.id, year: @year, month: @month).present?
     puts "#{count}/#{index}"
     options = {
