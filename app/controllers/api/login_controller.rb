@@ -23,8 +23,6 @@ class Api::LoginController < ApplicationController
 			user.third_session = third_session
 			user.save!
 			Rails.cache.write(user.redis_session_key, third_session, expires_in: 3.hour)
-			# 记录请求时间
-			L("action: get_openid, id: #{user.id}, used time: #{Time.now - start_time}")
 			return render json: { session: third_session }
 		end
 

@@ -33,7 +33,6 @@ class Api::ApiController < ApplicationController
       # 判断该键是否过期，过期返回状态码，要求登录后方可继续
       return render json: { status: 301, msg: 'session key overdue' }
     end
-    L("action: before_action, id: #{current_user.id}, time: #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}")
   end
 
   def add_operate_log
@@ -46,7 +45,6 @@ class Api::ApiController < ApplicationController
       page_route: request.headers['X-WX-PAGES'],
       ip: request.headers['HTTP_X_REAL_IP']
     )
-    L("action: after_action, id: #{current_user.id}, time: #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}")
   end
 
   def render_404(msg = '找不到对应记录')
