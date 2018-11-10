@@ -9,7 +9,7 @@ class Api::ChartController < Api::ApiController
     # 分类列表
     @categories = @statements.joins("inner join `categories` as c1 on `c1`.id = `statements`.category_id")
                              .joins("inner join `categories` as c2 on `c2`.id = `c1`.parent_id")
-                             .group('c2.id')
+                             .group('c2.id, statements.time, statements.year, statements.month, statements.day, statements.id')
                              .select('c2.name, c2.id, 1 as hidden')
   end
 
