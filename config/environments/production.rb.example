@@ -86,10 +86,16 @@ Rails.application.configure do
   #   logger.formatter = config.log_formatter
   #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
   # end
-  #config.action_mailer.delivery_method = :sendmail
-  #config.action_mailer.perform_deliveries = true
-  #config.action_mailer.raise_delivery_errors = true
-  #config.action_mailer.default_options = {from: 'no-reply@example.com'}
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address              => "smtp.163.com",
+    :port                 => 25,
+    :user_name            => "xxx@163.com",
+    :password             => "xxxx",
+    :authentication       => "login",
+    :enable_starttls_auto => true
+  }
+  ActionMailer::Base.raise_delivery_errors = true
   
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
