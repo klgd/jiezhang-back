@@ -52,12 +52,6 @@ bundle exec unicorn_rails -l 0.0.0.0:3000 -D -E production -c config/unicorn.rb
 bundle 过程中, rmagick 安装失败的话可以执行以下语句
 sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev
 
-Mysql 错误
-错误代码:
-SELECT list is not in GROUP BY clause and contains nonaggregated column 'ljt.statements.id' which is not functionally de ...
-sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
-sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
-sudo service mysql restart
 
 Docker可能存在的问题
 1. 挂载目录的问题
