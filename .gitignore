@@ -37,3 +37,4 @@ config/unicorn.rb
 public/letters
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
+private/
