@@ -11,6 +11,11 @@ class Api::UsersController < Api::ApiController
     render_success
   end
 
+  def update_nickname
+    current_user.update_attributes(nickname: params[:nickname])
+    render_success
+  end
+
   private
 
   def strip_emoji(text)

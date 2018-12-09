@@ -16,7 +16,7 @@ class User < ApplicationRecord
   validates :openid, presence: true, uniqueness: true
 
   mount_uploader :avatar_url, AvatarUploader
-  # mount_uploader :bg_avatar_url, AvatarUploader
+  mount_uploader :bg_avatar_url, AvatarUploader
 
   include UserAble
 
@@ -50,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def avatar_path
-    if self.avatar_url_identifier.present? && self.avatar_url_identifier.include?('http')
+    if self.avatar_url_identifier.present? && self.avatar_url_identifier.start_with?('http')
       self.avatar_url_identifier
     else
       "#{Settings.host}#{self.avatar_url}"
@@ -62,7 +62,6 @@ class User < ApplicationRecord
       "#{Settings.host}#{self.bg_avatar_url}"
     else
       nil
-      # "#{Settings.host}/default-bg.jpeg"
     end
   end
 

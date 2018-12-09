@@ -15,7 +15,7 @@ class Api::LoginController < ApplicationController
 		user = User.find_by_openid(openid) || User.new(openid: openid, session_key: session_key)
 		cache_session_key = Rails.cache.read(user.redis_session_key)
 		if cache_session_key.present?
-			return render json: { session: cache_session_key }
+			return render json: { status: 200, session: cache_session_key }
 		end
 
 		if user.present?
@@ -23,12 +23,14 @@ class Api::LoginController < ApplicationController
 			user.third_session = third_session
 			user.save!
 			Rails.cache.write(user.redis_session_key, third_session, expires_in: 3.hour)
-			return render json: { session: third_session }
+			return render json: { status: 200, session: third_session }
 		end
 
 		render json: { status: 404, msg: '登录失败' }
 	end
-	
+
+	private
+
   # params: code
   # response: hash {  'session_key': '', 'openid': '' }
   def wx_get_session_key(code)

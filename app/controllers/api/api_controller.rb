@@ -47,7 +47,7 @@ class Api::ApiController < ApplicationController
     )
   end
 
-  def render_404(msg = '找不到对应记录')
+  def render_404(msg = 'not found')
     render json: { status: 404, msg: msg }
   end
 
