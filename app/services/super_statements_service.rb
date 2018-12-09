@@ -19,7 +19,7 @@ class SuperStatementsService
                                     IFNULL(income_amount, 0) as income_amount, 
                                     (IFNULL(income_amount, 0) - IFNULL(expend_amount, 0)) as surplus,
                                     1 as hidden')
-                            .group(:year, :month)
+                            .group(:year, :month, :expend_amount, :income_amount, :surplus, :hidden)
                             .order('year desc, month desc')
     header = {
       expend: statements.inject(0){ |sum, e| sum += e.expend_amount.to_f },
