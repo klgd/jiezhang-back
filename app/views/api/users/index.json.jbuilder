@@ -7,3 +7,6 @@ json.sts_count @current_user.statements.count
 json.email @current_user.email
 json.phone @current_user.phone
 json.bg_avatar_url @current_user.bg_avatar_url
+json.position_1_human_name @current_user.position_1_human_name
+json.position_2_human_name @current_user.position_2_human_name
+json.position_3_human_name @current_user.position_3_human_name

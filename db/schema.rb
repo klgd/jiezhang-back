@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181001134318) do
+ActiveRecord::Schema.define(version: 20181216082702) do
 
   create_table "asset_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
@@ -205,6 +205,9 @@ ActiveRecord::Schema.define(version: 20181001134318) do
     t.decimal "budget", precision: 12, scale: 2, default: "0.0"
     t.string "bg_avatar_url"
     t.integer "bonus_points", default: 0
+    t.string "header_position_1"
+    t.string "header_position_2"
+    t.string "header_position_3"
     t.index ["openid"], name: "index_users_on_openid", unique: true
   end
 

@@ -12,7 +12,7 @@ class Api::ApiController < ApplicationController
   
   before_action :login
 
-  after_action :add_operate_log
+  # after_action :add_operate_log
 
   include ApplicationHelper
 

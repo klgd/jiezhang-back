@@ -5,6 +5,7 @@ module UserAble
 	end
 
 	def initialize_user
+		initialize_header_setting
 		initialize_uuid
 		initialize_assets
 		initialize_expend_categories
@@ -13,7 +14,14 @@ module UserAble
   end
 
 	private
-	
+	def initialize_header_setting
+		self.update_attributes(
+			header_position_1: POSITION_1[0][:value],
+			header_position_2: POSITION_2[2][:value],
+			header_position_3: POSITION_3.last[:value]
+		)
+	end
+
 	def initialize_uuid
 		self.update_attributes(uid: self.id + 10000)
 	end

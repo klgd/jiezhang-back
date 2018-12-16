@@ -14,6 +14,10 @@ class Api::SettingsController < Api::ApiController
 		render_success
 	end
 
+	def positions
+		render_success(data: [User::POSITION_1, User::POSITION_2, User::POSITION_3])
+	end
+
 	def covers
 		data = []
 		(5..13).each do |num|

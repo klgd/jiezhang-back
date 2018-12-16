@@ -15,6 +15,13 @@ class Api::UsersController < Api::ApiController
     current_user.update_attributes(nickname: params[:nickname])
     render_success
   end
+  
+  def update_position
+    attr = "header_position_#{params[:position].to_i}="
+    current_user.send(attr, params[:value])
+    current_user.save
+    render_success
+  end
 
   private
 

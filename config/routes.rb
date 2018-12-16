@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       collection do
         put :update_user
         put :update_nickname
+        put :update_position
       end
     end
     
@@ -99,6 +100,7 @@ Rails.application.routes.draw do
         post :upload
         get :covers
         post :set_cover
+        get :positions
       end
     end
 
