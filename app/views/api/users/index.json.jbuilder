@@ -10,3 +10,6 @@ json.bg_avatar_url @current_user.bg_avatar_url
 json.position_1_human_name @current_user.position_1_human_name
 json.position_2_human_name @current_user.position_2_human_name
 json.position_3_human_name @current_user.position_3_human_name
+json.position_1_amount money_format(@current_user.position_1_amount_number)
+json.position_2_amount money_format(@current_user.position_2_amount_number)
+json.position_3_amount money_format(@current_user.position_3_amount_number)

@@ -13,42 +13,15 @@ class User < ApplicationRecord
   has_many :messages, foreign_key: :target_id
   has_many :operate_logs
   has_many :month_charts
+
   validates :openid, presence: true, uniqueness: true
 
   mount_uploader :avatar_url, AvatarUploader
   mount_uploader :bg_avatar_url, AvatarUploader
 
-  include UserAble
+  include UserAble, UserHeader
 
   SESSION_KEY_EXPIRE = 7200
-
-  # 一号位置
-  POSITION_1 = [
-    { name: '今日支出', value: 'today_expend' },
-    { name: '今日收入', value: 'today_income' },
-    { name: '今日结余', value: 'today_surplus'},
-    { name: '本月支出', value: 'month_expend' },
-    { name: '本月收入', value: 'month_income' },
-    { name: '本月结余', value: 'month_surplus'}
-  ]
-
-  POSITION_2 = [
-    { name: '本周支出', value: 'week_expend'  },
-    { name: '本周结余', value: 'week_surplus' },
-    { name: '本月支出', value: 'month_expend' },
-    { name: '本月结余', value: 'month_surplus'},
-    { name: '本年支出', value: 'year_expend'  },
-    { name: '本年结余', value: 'year_surplus' }
-  ]
-
-  POSITION_3 = [
-    { name: '本月支出', value: 'month_expend' },
-    { name: '本月结余', value: 'month_surplus'},
-    { name: '本年支出', value: 'year_expend'  },
-    { name: '本年收入', value: 'year_income'  },
-    { name: '本年结余', value: 'year_expend'  },
-    { name: '预算剩余', value: 'month_budget' }
-  ]
 
   def designation
     bonus[0]
@@ -75,18 +48,6 @@ class User < ApplicationRecord
     else
       ['记账达人', '#FF9C0B']
     end
-  end
-
-  def position_1_human_name
-    POSITION_1.find{ |p| p[:value] === header_position_1 }[:name]
-  end
-
-  def position_2_human_name
-    POSITION_2.find{ |p| p[:value] === header_position_2 }[:name]
-  end
-
-  def position_3_human_name
-    POSITION_3.find{ |p| p[:value] === header_position_3 }[:name]
   end
 
   def avatar_path

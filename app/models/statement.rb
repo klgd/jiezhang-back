@@ -8,7 +8,11 @@ class Statement < ApplicationRecord
   belongs_to :category
   scope :expend, -> { where("`statements`.type = 'expend'") }
   scope :income, -> { where("`statements`.type = 'income'") }
-  
+  scope :in_day, -> (date) { where("`statements`.year = ? and `statements`.month = ? and `statements`.day = ?", date.year, date.month, date.day) }
+  scope :in_month, -> (date) { where("`statements`.year = ? and `statements`.month = ?", date.year, date.month) }
+  scope :in_year, -> (date) { where("`statements`.year = ?", date.year) }
+  scope :in_week, -> (date) { where("`statements`.created_at >= ? and `statements`.created_at <= ?", date.beginning_of_week, date.end_of_week) }
+
   INCOME = 'income'
   EXPEND = 'expend'
   before_create :set_residue

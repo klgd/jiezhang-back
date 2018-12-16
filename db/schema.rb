@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181216082702) do
+ActiveRecord::Schema.define(version: 20181216123029) do
 
   create_table "asset_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
@@ -183,6 +183,16 @@ ActiveRecord::Schema.define(version: 20181216082702) do
     t.index ["user_id", "category_id"], name: "index_statements_on_user_id_and_category_id"
     t.index ["user_id", "type"], name: "index_statements_on_user_id_and_type"
     t.index ["year", "month", "day", "time"], name: "index_statements_on_year_and_month_and_day_and_time"
+  end
+
+  create_table "user_assets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.string "path"
+    t.string "target"
+    t.integer "target_id"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

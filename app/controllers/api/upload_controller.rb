@@ -7,6 +7,8 @@ class Api::UploadController < Api::ApiController
 			render json: upload_user_avatar
 		when 'bg_avatar'
 			render json: upload_bg_avatar
+		when 'index_header_bg'
+			render json: upload_index_header_bg
 		else
 			render_404
 		end
@@ -25,4 +27,9 @@ class Api::UploadController < Api::ApiController
 		current_user.save!
 		{ status: 200, avatar_path: current_user.bg_avatar_path }
 	end
+
+	def upload_index_header_bg
+		
+	end
+
 end
