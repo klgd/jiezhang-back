@@ -6,13 +6,13 @@ class Api::UsersController < Api::ApiController
     user = params.require(:user)
     user_params = user.permit(:country, :city, :gender, :language, :province)
     user_params.delete(:openid)
-    user_params.merge!(nickname: user[:nickName].to_s.force_encoding('utf-8'), remote_avatar_url_url: user[:avatarUrl])
+    user_params.merge!(remote_avatar_url_url: user[:avatarUrl]) if user[:avatarUrl].present?
+    user_params.merge!(nickname: user[:nickName]) if user[:nickName].present?
+    # 单独更新
+    if user[:bg_avatar].present?
+      current_user.update_column(:bg_avatar_url, user[:bg_avatar])
+    end
     current_user.update_attributes!(user_params)
-    render_success
-  end
-
-  def update_nickname
-    current_user.update_attributes(nickname: params[:nickname])
     render_success
   end
   
@@ -21,10 +21,6 @@ class Api::UsersController < Api::ApiController
     current_user.send(attr, params[:value])
     current_user.save
     render_success
-  end
-
-  def set_bg_avatar
-    
   end
 
 end
