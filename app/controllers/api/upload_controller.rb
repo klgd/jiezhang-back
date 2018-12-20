@@ -29,7 +29,11 @@ class Api::UploadController < Api::ApiController
 	end
 
 	def upload_index_header_bg
-		
+		user_asset = current_user.user_assets.new(imageable_type: 'User', imageable_id: '1')
+		user_asset.path = AvatarUploader.new
+		user_asset.path.store!(params[:file])
+		user_asset.save!
+		{ status: 200 }
 	end
 
 end

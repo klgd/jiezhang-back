@@ -188,11 +188,12 @@ ActiveRecord::Schema.define(version: 20181216123029) do
   create_table "user_assets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
     t.string "path"
-    t.string "target"
-    t.integer "target_id"
+    t.string "imageable_type"
+    t.bigint "imageable_id"
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_user_assets_on_imageable_type_and_imageable_id"
   end
 
   create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
