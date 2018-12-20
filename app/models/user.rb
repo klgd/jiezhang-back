@@ -59,8 +59,9 @@ class User < ApplicationRecord
   end
 
   def bg_avatar_path
-    if self.bg_avatar_url.present?
-      "#{Settings.host}#{self.bg_avatar_url}"
+    return "#{Settings.host}/covers/#{bg_avatar_url_identifier}" if bg_avatar_url_identifier.present? && bg_avatar_url_identifier.include?('default')
+    if bg_avatar_url.present?
+      "#{Settings.host}#{bg_avatar_url}"
     else
       nil
     end

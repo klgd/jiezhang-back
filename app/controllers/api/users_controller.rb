@@ -23,6 +23,10 @@ class Api::UsersController < Api::ApiController
     render_success
   end
 
+  def set_bg_avatar
+    
+  end
+
   private
 
   def strip_emoji(text)
