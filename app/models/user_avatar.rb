@@ -1,0 +1,3 @@
+class UserAvatar < UserAsset
+
+end

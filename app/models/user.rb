@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :messages, foreign_key: :target_id
   has_many :operate_logs
   has_many :month_charts
-  has_many :user_assets
+  has_many :user_avatars, class_name: 'UserAvatar', as: :imageable
 
   validates :openid, presence: true, uniqueness: true
 

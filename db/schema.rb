@@ -186,8 +186,8 @@ ActiveRecord::Schema.define(version: 20181216123029) do
   end
 
   create_table "user_assets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "user_id"
     t.string "path"
+    t.string "type"
     t.string "imageable_type"
     t.bigint "imageable_id"
     t.integer "score"
