@@ -45,7 +45,7 @@ bundle exec unicorn_rails -l 0.0.0.0:3000 -D -E production -c config/unicorn.rb
 + 复制 Gemfile 和 Gemfile.lock 到 docker 文件夹
 + docker build -t jz -f ./Dockerfile .
 + docker exec -it jz /bin/bash
-+ docker-machine 挂载路径问题 https://xiaoyounger.com/article/17
++ docker-machine 挂载路径问题
 
 ### 可能遇到的问题
 ```
